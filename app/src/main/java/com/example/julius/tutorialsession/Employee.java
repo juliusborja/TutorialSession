@@ -13,8 +13,33 @@ public class Employee {
     public Date started;
     public float idno;
     public int contact;
+    public int salary;
+    public int deduction;
 
-    public void resign() {}
+    public Employee(){
+        salary = 1000;
+        deduction = 20;
+    }
+
+    public Employee(int salary){
+        this.salary = salary;
+        deduction = 20;
+    }
+
+    public void setDeduction (int deduction) {
+        this.deduction = deduction;
+    }
+
+    public int getNetIncome (){
+        return salary - deduction;
+    }
+
+    public void setName (String name){
+        this.name = name;
+    }
+
+    public void resign() {
+    }
     public void start() {}
     public void out() {}
 
@@ -22,9 +47,6 @@ public class Employee {
         return name;
     }
 
-    public void setName(String value){
-        name = value;
-    }
 
     private void secretMethod(){
 

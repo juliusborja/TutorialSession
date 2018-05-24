@@ -1,7 +1,5 @@
 package com.example.julius.tutorialsession;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,13 +8,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Button;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     TextView title;
-    Button prev;
+    Button addSalary;
     Button next;
     EditText text1;
     EditText text2;
+
+    Computer computer;
+    Employee employee1;
+    Employee employee2;
+    Employee employee3;
+
+    List<Employee> employees;
 
 
     @Override
@@ -24,21 +32,54 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        computer = new Computer();
+
         title = findViewById(R.id.title);
-        prev = findViewById(R.id.prev);
+        addSalary = findViewById(R.id.prev);
         next = findViewById(R.id.next);
         text1 = findViewById(R.id.text1);
         text2 = findViewById(R.id.text2);
 
-        prev.setOnClickListener(new View.OnClickListener() {
+        employee1 = new Employee();
+        employee2 = new Employee(10);
+        employee3 = new Employee();
+
+        employees = new ArrayList();
+
+        employees.add(employee1);
+        employees.add(employee2);
+        employees.add(employee3);
+
+        int ded = 500;
+        int total = 0;
+
+        String message = "";
+
+
+        for(int counter = 0; counter<employees.size(); counter++){
+            Employee tempEmployee = employees.get(counter);
+            tempEmployee.setDeduction(ded+counter);
+            tempEmployee.setName("employee" + (counter+1));
+
+            message = message + "Employee: " + tempEmployee.name + "\n";
+            message = message + "Salary: " + tempEmployee.salary + "\n";
+            message = message + "Deduction: " + tempEmployee.deduction + "\n\n";
+
+            total+=tempEmployee.getNetIncome();
+        }
+
+        message = message + "Total Net Income of All Employees: " + total;
+
+        final String finalMessage = message;
+        addSalary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                int x = 6;
-                int y = 5;
-                float z = add(x, y);
 
-                Toast.makeText(MainActivity.this, "Sum is " + z, Toast.LENGTH_LONG).show();
+                int eIncome1 = employee1.getNetIncome();
+                int eIncome2 = employee2.getNetIncome();
+
+                Toast.makeText(MainActivity.this, finalMessage, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -49,17 +90,13 @@ public class MainActivity extends AppCompatActivity {
                 float x = convertToFloat(text1);
                 float y = convertToFloat(text2);
 
-                Toast.makeText(MainActivity.this,  "The sum is " + add(x, y), Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this,  "The sum is " + computer.add(x, y), Toast.LENGTH_LONG).show();
             }
         });
 
     }
 
-    public float add(float x, float y) {
-        float z = x + y;
-        return z;
 
-    }
 
     public float convertToFloat(EditText input){
 

@@ -19,7 +19,7 @@
             android:id="@+id/prev"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="Previous" ></Button>
+            android:text="Do Action" ></Button>
 
         <Button
             android:id="@+id/next"
@@ -47,7 +47,6 @@
 
 
 </LinearLayout>
-
 
 
 

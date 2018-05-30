@@ -3,299 +3,196 @@ package com.example.julius.tutorialsession;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Button;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView title;
-    Button addSalary;
-    Button next;
-    EditText text1;
-    EditText text2;
+    EditText empName1;
+    EditText empName2;
+    EditText empName3;
 
-    Computer computer;
-    Employee employee1;
-    Employee employee2;
-    Employee employee3;
+    EditText empSalary1;
+    EditText empSalary2;
+    EditText empSalary3;
 
-    List<Employee> employees;
+    EditText empDeduction1;
+    EditText empDeduction2;
+    EditText empDeduction3;
 
+    TextView salEval1;
+    TextView salEval2;
+    TextView salEval3;
+
+    Button computeBtn;
+
+    EditText studName1;
+    EditText studName2;
+    EditText studName3;
+    
+    EditText studCourse1;
+    EditText studCourse2;
+    EditText studCourse3;
+    
+    EditText studGrade1;
+    EditText studGrade2;
+    EditText studGrade3;
+    
+    TextView GradeEval1;
+    TextView GradeEval2;
+    TextView GradeEval3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.student);
+        
+        studName1 = findViewById(R.id.studName1);
+        studName2 = findViewById(R.id.studName2);
+        studName3 = findViewById(R.id.studName3);
 
-        computer = new Computer();
+        studCourse1 = findViewById(R.id.studCourse1);
+        studCourse2 = findViewById(R.id.studCourse2);
+        studCourse3 = findViewById(R.id.studCourse3);
 
-        title = findViewById(R.id.title);
-        addSalary = findViewById(R.id.prev);
-        next = findViewById(R.id.next);
-        text1 = findViewById(R.id.text1);
-        text2 = findViewById(R.id.text2);
+        studGrade1 = findViewById(R.id.studGrade1);
+        studGrade2 = findViewById(R.id.studGrade2);
+        studGrade3 = findViewById(R.id.studGrade3);
 
-        employee1 = new Employee();
-        employee2 = new Employee(10);
-        employee3 = new Employee();
+        GradeEval1 = findViewById(R.id.GradeEval1);
+        GradeEval2 = findViewById(R.id.GradeEval2);
+        GradeEval3 = findViewById(R.id.GradeEval3);
 
-        employees = new ArrayList();
+        computeBtn = findViewById(R.id.computeBtn);
 
-        employees.add(employee1);
-        employees.add(employee2);
-        employees.add(employee3);
-
-        int ded = 500;
-        int total = 0;
-
-        String message = "";
-
-
-        for(int counter = 0; counter<employees.size(); counter++){
-            Employee tempEmployee = employees.get(counter);
-            tempEmployee.setDeduction(ded+counter);
-            tempEmployee.setName("employee" + (counter+1));
-
-            message = message + "Employee: " + tempEmployee.name + "\n";
-            message = message + "Salary: " + tempEmployee.salary + "\n";
-            message = message + "Deduction: " + tempEmployee.deduction + "\n\n";
-
-            total+=tempEmployee.getNetIncome();
-        }
-
-        message = message + "Total Net Income of All Employees: " + total;
-
-        final String finalMessage = message;
-        addSalary.setOnClickListener(new View.OnClickListener() {
+        computeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                int grade1 = 0;
 
-                int eIncome1 = employee1.getNetIncome();
-                int eIncome2 = employee2.getNetIncome();
+                try {
+                    grade1 = Integer.parseInt(studGrade1.getText().toString());
+                }catch(Exception e){
+                    Toast.makeText(MainActivity.this, "Invalid Input", Toast.LENGTH_LONG).show();
+                }
 
-                Toast.makeText(MainActivity.this, finalMessage, Toast.LENGTH_LONG).show();
+                if(grade1<75){
+                    GradeEval1.setText("F");
+                }else if(grade1<79){
+                    GradeEval1.setText("E");
+                }else if(grade1<85) {
+                    GradeEval1.setText("D");
+                }else if(grade1<89) {
+                    GradeEval1.setText("C");
+                }else if(grade1<94) {
+                    GradeEval1.setText("B");
+                }else{
+                    GradeEval1.setText("A");
+                }
+
+                int grade2 = 0;
+
+                try {
+                    grade2 = Integer.parseInt(studGrade2.getText().toString());
+                }catch(Exception e){
+                    Toast.makeText(MainActivity.this, "Invalid Input", Toast.LENGTH_LONG).show();
+                }
+
+                if(grade2<75){
+                    GradeEval2.setText("F");
+                }else if(grade2<79){
+                    GradeEval2.setText("E");
+                }else if(grade2<85) {
+                    GradeEval2.setText("D");
+                }else if(grade2<89) {
+                    GradeEval2.setText("C");
+                }else if(grade2<94) {
+                    GradeEval2.setText("B");
+                }else{
+                    GradeEval2.setText("A");
+                }
+
+                int grade3 = 0;
+
+                try {
+                    grade3 = Integer.parseInt(studGrade3.getText().toString());
+                }catch(Exception e){
+                    Toast.makeText(MainActivity.this, "Invalid Input", Toast.LENGTH_LONG).show();
+                }
+
+                if(grade3<75){
+                    GradeEval3.setText("F");
+                }else if(grade3<79){
+                    GradeEval3.setText("E");
+                }else if(grade3<85) {
+                    GradeEval3.setText("D");
+                }else if(grade3<89) {
+                    GradeEval3.setText("C");
+                }else if(grade3<94) {
+                    GradeEval3.setText("B");
+                }else{
+                    GradeEval3.setText("A");
+                }
             }
         });
 
-        next.setOnClickListener(new View.OnClickListener() {
+    }
+
+    public void loadEmployee() {
+        empName1 = findViewById(R.id.empName1);
+        empName2 = findViewById(R.id.empName2);
+        empName3 = findViewById(R.id.empName3);
+
+        empSalary1 = findViewById(R.id.empSalary1);
+        empSalary2 = findViewById(R.id.empSalary2);
+        empSalary3 = findViewById(R.id.empSalary3);
+
+        empDeduction1 = findViewById(R.id.empDeduction1);
+        empDeduction2 = findViewById(R.id.empDeduction2);
+        empDeduction3 = findViewById(R.id.empDeduction3);
+
+        salEval1 = findViewById(R.id.salaryEval1);
+        salEval2 = findViewById(R.id.salaryEval2);
+        salEval3 = findViewById(R.id.salaryEval3);
+
+        computeBtn = findViewById(R.id.computeBtn);
+
+        computeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String message = "";
 
-                float x = convertToFloat(text1);
-                float y = convertToFloat(text2);
+                String name1 = empName1.getText().toString();
+                float sal1 = 0;
+                float ded1 = 0;
+                boolean emp1Valid = false;
 
-                Toast.makeText(MainActivity.this,  "The sum is " + computer.add(x, y), Toast.LENGTH_LONG).show();
-            }
-        });
+                try {
+                    sal1 = Float.parseFloat(empSalary1.getText().toString());
+                    ded1 = Float.parseFloat(empDeduction1.getText().toString());
 
-    }
+                    emp1Valid = true;
+                } catch (Exception e) {
+                    Toast.makeText(MainActivity.this, "Invalid Inputs!!!", Toast.LENGTH_LONG).show();
+                }
 
+                if (emp1Valid) {
+                    Toast.makeText(MainActivity.this, message + (sal1 - ded1), Toast.LENGTH_LONG).show();
+                }
 
-
-    public float convertToFloat(EditText input){
-
-        String val = input.getText().toString();
-
-        float num = Float.parseFloat(val);
-
-        return num;
-
-    }
-
-
-
-    public void goToNext(){
-
-        Toast.makeText(MainActivity.this, "Going to Previous Screen", Toast.LENGTH_LONG).show();
-    }
-
-
-    /*
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main);
-
-        input = findViewById(R.id.editText);
-        text = findViewById(R.id.text);
-        text2 = findViewById(R.id.text2);
-
-        b1= (Button) findViewById(R.id.button);
-
-        b1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String inputValue = input.getText().toString();
-                int convVal = Integer.parseInt(inputValue);
-
-                String inputValue2 = text2.getText().toString();
-                int convVal2 = Integer.parseInt(inputValue2);
-
-                //Toast.makeText(MainActivity.this, convVal + "-" + convVal2, Toast.LENGTH_LONG).show();
-
-                text.setText(add(convVal, convVal2) + "");
+                if (sal1 < 1000) {
+                    salEval1.setText("Under Paid");
+                } else if (sal1 == 1000) {
+                    salEval1.setText("Ok");
+                } else {
+                    salEval1.setText("Over Paid");
+                }
 
             }
         });
-
-
-
-
-
-        input.setVisibility(View.INVISIBLE);
-        input.setVisibility(View.VISIBLE);
-        input.setVisibility(View.GONE);
-
-
-
-        Toast.makeText(this, "Hello there again!", Toast.LENGTH_LONG).show();
-
-
-        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle("Alert Dialog");
-        alertDialog.setMessage("Welcome user!");
-
-        alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getApplicationContext(), "You clicked on OK", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        alertDialog.setButton("NYE", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getApplicationContext(), "You clicked on NYE", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        alertDialog.show();
-
     }
-
-
-    public void tutorial(){
-
-        name = "hello world";
-
-        int nameLength = name.length();
-        char charAtFive = name.charAt(5);
-
-        name = name.toUpperCase();
-        name = name.toLowerCase();
-
-        Person person1 = new Person();
-        Person person2 = new Person();
-
-        person1.smoke();
-
-
-    }
-
-
-    public void employeeAction(){
-
-        Employee employee1 = new Employee();
-        employee1.resign();
-
-        Employee employee2 = new Employee();
-
-        employee1.setName("Julius");
-        employee1.getName();
-
-        employee2.setName("Yumi");
-
-    }
-
-    public void doCalculation(){
-
-        int x = 2;
-        int y = 5;
-        int total = add(x,y);
-
-        total = sub(5, add(total,add(25, sub(22, 6))) );
-
-    }
-
-    public void doCalculation(int x){
-
-
-
-    }
-
-
-    public String overloadingExample(int x){
-
-        if(x==1) {
-            doCalculation();
-        }else if(x==7){
-            doCalculation(1);
-        }else{
-            //some Code
-        }
-
-        String output = "";
-        String output2 = "";
-/*
-        switch(x){
-            case 1:
-                output = "one";
-                break;
-            case 2:
-                output = "two";
-                break;
-            case 7:
-                output = "seven";
-                break;
-            default:
-                output = "some number";
-        }
-
-        if(x==1) {
-            output = "one";
-        }
-        else if (x==2) {
-            output = "two";
-        }
-        else if(x==7) {
-            output="seven";
-        }
-        else{
-            output = "some number";
-        }
-        return output;
-
-
-    }
-
-
-
-
-
-
-    public char doSomething(){
-        return 'a';
-    }
-
-
-    public int add(int x, int y){
-        int sum = x + y;
-
-        return sum;
-    }
-
-    public int sub(int x, int y) {
-        int dif = x -y;
-
-        return dif;
-    }
-
-*/
-
-
+    
 }

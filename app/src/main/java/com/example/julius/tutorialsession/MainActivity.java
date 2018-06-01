@@ -5,8 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,11 +48,148 @@ public class MainActivity extends AppCompatActivity {
     TextView GradeEval2;
     TextView GradeEval3;
 
+    List<Student> studentList;
+    List<EditText> studentNamesEditTextList;
+    List<EditText> studentCourseEditTextList;
+    List<EditText> studentGradeEditTextList;
+    List<TextView> studentEvalTextViewList;
+
+    LinearLayout studentContainer;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.student);
-        
+
+        //use student.xml
+//        setContentView(R.layout.student);
+//        loadStudentOneByOne();
+
+        //use student_list.xml
+//        setContentView(R.layout.student_list);
+//        loadDynamicStudentList();
+
+        //use activity_main.xml
+        setContentView(R.layout.activity_main);
+        loadEmployee();
+
+    }
+
+    public void loadDynamicStudentList(){
+
+        //Generate UI
+        studentContainer = findViewById(R.id.studentContainer);
+
+        Button btn = new Button(MainActivity.this);
+        btn.setText("Compute");
+
+        Button addBtn = new Button(MainActivity.this);
+        addBtn.setText("Add Student");
+
+        studentContainer.addView(btn);
+        studentContainer.addView(addBtn);
+
+        studentList = new ArrayList<>();
+        studentNamesEditTextList = new ArrayList<>();
+        studentCourseEditTextList = new ArrayList<>();
+        studentGradeEditTextList = new ArrayList<>();
+        studentEvalTextViewList = new ArrayList<>();
+
+        for(int counter = 0; counter<3; counter++){
+
+            EditText nameEditText = new EditText(MainActivity.this);
+            EditText courseEditText = new EditText(MainActivity.this);
+            EditText gradeEditText = new EditText(MainActivity.this);
+            TextView evalTextView = new TextView(MainActivity.this);
+
+            nameEditText.setText("student" + counter);
+
+            studentContainer.addView(nameEditText);
+            studentContainer.addView(courseEditText);
+            studentContainer.addView(gradeEditText);
+            studentContainer.addView(evalTextView);
+
+            studentNamesEditTextList.add(nameEditText);
+            studentCourseEditTextList.add(courseEditText);
+            studentGradeEditTextList.add(gradeEditText);
+            studentEvalTextViewList.add(evalTextView);
+
+        }
+
+        //Set Button Action
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //store students in studentList
+                for(int counter=0; counter<studentNamesEditTextList.size(); counter++){
+                    studentList = new ArrayList<>();
+
+                    Student student = new Student();
+                    student.setStudName(studentNamesEditTextList.get(counter).getText().toString());
+                    student.setStudCourse(studentCourseEditTextList.get(counter).getText().toString());
+                    try {
+                        student.setStudGrade(Integer.parseInt(studentGradeEditTextList.get(counter).getText().toString()));
+                    }catch(Exception e){
+
+                    }
+                    studentList.add(student);
+                }
+
+                //do Evaluation
+                int total = 0;
+                for(int counter=0; counter<studentList.size(); counter++){
+
+                    int grade = studentList.get(counter).getStudGrade();
+
+                    if(grade<75){
+                        studentEvalTextViewList.get(counter).setText("F");
+                    }else if(grade<79){
+                        studentEvalTextViewList.get(counter).setText("E");
+                    }else if(grade<85) {
+                        studentEvalTextViewList.get(counter).setText("D");
+                    }else if(grade<89) {
+                        studentEvalTextViewList.get(counter).setText("C");
+                    }else if(grade<94) {
+                        studentEvalTextViewList.get(counter).setText("B");
+                    }else{
+                        studentEvalTextViewList.get(counter).setText("A");
+                    }
+
+                    total+=grade;
+
+                }
+
+                //show Average
+                Toast.makeText(MainActivity.this, "Average: " + (total/studentList.size()), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                EditText nameEditText = new EditText(MainActivity.this);
+                EditText courseEditText = new EditText(MainActivity.this);
+                EditText gradeEditText = new EditText(MainActivity.this);
+                TextView evalTextView = new TextView(MainActivity.this);
+
+                nameEditText.setText("student" + studentNamesEditTextList.size());
+
+                studentContainer.addView(nameEditText);
+                studentContainer.addView(courseEditText);
+                studentContainer.addView(gradeEditText);
+                studentContainer.addView(evalTextView);
+
+                studentNamesEditTextList.add(nameEditText);
+                studentCourseEditTextList.add(courseEditText);
+                studentGradeEditTextList.add(gradeEditText);
+                studentEvalTextViewList.add(evalTextView);
+
+            }
+        });
+    }
+
+    public void loadStudentOneByOne(){
         studName1 = findViewById(R.id.studName1);
         studName2 = findViewById(R.id.studName2);
         studName3 = findViewById(R.id.studName3);
@@ -67,9 +208,58 @@ public class MainActivity extends AppCompatActivity {
 
         computeBtn = findViewById(R.id.computeBtn);
 
+        studentList = new ArrayList();
+        studentNamesEditTextList = new ArrayList();
+        studentCourseEditTextList = new ArrayList<>();
+        studentGradeEditTextList = new ArrayList<>();
+        studentEvalTextViewList = new ArrayList<>();
+
+        studentNamesEditTextList.add(studName1);
+        studentNamesEditTextList.add(studName2);
+        studentNamesEditTextList.add(studName3);
+
+        studentCourseEditTextList.add(studCourse1);
+        studentCourseEditTextList.add(studCourse2);
+        studentCourseEditTextList.add(studCourse3);
+
+        studentGradeEditTextList.add(studGrade1);
+        studentGradeEditTextList.add(studGrade2);
+        studentGradeEditTextList.add(studGrade3);
+
+        studentEvalTextViewList.add(GradeEval1);
+        studentEvalTextViewList.add(GradeEval2);
+        studentEvalTextViewList.add(GradeEval3);
+
         computeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                for(int counter = 0; counter<3; counter++){
+                    Student student = new Student();
+
+                    student.setStudName(studentNamesEditTextList.get(counter).getText().toString());
+                    student.setStudCourse(studentCourseEditTextList.get(counter).getText().toString());
+
+                    try {
+                        student.setStudGrade(Integer.parseInt(studentGradeEditTextList.get(counter).getText().toString()));
+                    }catch(Exception e) {
+
+                    }
+
+                    studentList.add(student);
+                }
+
+                int total = 0;
+
+                for(int counter = 0; counter<studentList.size(); counter++){
+
+                    total = total + studentList.get(counter).getStudGrade();
+
+                }
+
+                float average = total/studentList.size();
+
+                Toast.makeText(MainActivity.this, "Average: " + average, Toast.LENGTH_LONG).show();
 
                 int grade1 = 0;
 
@@ -138,7 +328,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     public void loadEmployee() {
